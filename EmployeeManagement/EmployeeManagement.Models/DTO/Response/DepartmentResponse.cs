@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EmployeeManagement.Models.DTO.Response
+﻿namespace EmployeeManagement.Models.DTO.Response
 {
-    internal class DepartmentResponse
+    public class DepartmentResponse
     {
+        public string DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
     }
 }

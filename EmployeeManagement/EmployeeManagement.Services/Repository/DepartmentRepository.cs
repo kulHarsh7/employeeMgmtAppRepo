@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EmployeeManagement.Contacts.Repository;
+using EmployeeManagement.Services.DBContext;
 
 namespace EmployeeManagement.Services.Repository
 {
-    internal class DepartmentRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
+        private readonly EmployeeDbContext _dbContext;
+
+        public DepartmentRepository(EmployeeDbContext dbContext)
+        {
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        }
     }
 }
