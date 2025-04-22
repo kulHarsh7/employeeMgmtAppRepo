@@ -1,5 +1,7 @@
 ﻿using EmployeeManagement.Contacts.Application;
 using EmployeeManagement.Contacts.Repository;
+using EmployeeManagement.Models.DTO.Request;
+using EmployeeManagement.Models.DTO.Response;
 using Microsoft.Extensions.Logging;
 
 namespace EmployeeManagement.Services.Application
@@ -13,6 +15,31 @@ namespace EmployeeManagement.Services.Application
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _departmentRepository = departmentRepository ?? throw new ArgumentNullException(nameof(departmentRepository));
+        }
+
+        public Task<DepartmentResponse> CreateDepartment(CreateDepartmentRequest createDepartmentRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteDepartment(string DepartmentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<DepartmentResponse>> GetAllDepartments()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DepartmentResponse> GetDepartmentById(string DepartmentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DepartmentResponse> UpdateDepartment(UpdateDepartmentRequest updateDepartmentRequest)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using EmployeeManagement.Models.Models;
-
-namespace EmployeeManagement.Models.DTO.Response
+﻿namespace EmployeeManagement.Models.DTO.Response
 {
     public class EmployeeResponse
     {
@@ -10,6 +8,6 @@ namespace EmployeeManagement.Models.DTO.Response
         public string Email { get; set; } = string.Empty;
         public decimal Salary { get; set; }
         public int DepartmentId { get; set; }
-        public Department Department { get; set; } = null!;
+        public string DepartmentName { get; set; } = null!;
     }
 }
