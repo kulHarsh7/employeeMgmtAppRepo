@@ -4,10 +4,10 @@ namespace EmployeeManagement.Contacts.Repository
 {
     public interface IDepartmentRepository
     {
-        Task<Department> GetDepartmentById(Guid DepartmentId);
+        Task<Department> GetDepartmentById(Guid departmentId);
         Task<List<Department>> GetAllDepartments();
-        Task<Department> CreateDepartment(Department DepartmentModel);
-        Task<Department> UpdateDepartment(Department DepartmentModel);
-        Task<bool> DeleteDepartment(Guid DepartmentId);
+        Task<Department> CreateDepartment(Department departmentModel);
+        Task<Department> UpdateDepartment(Department departmentModel);
+        Task<bool> DeleteDepartment(Guid departmentId);
     }
 }

@@ -22,7 +22,7 @@ namespace EmployeeManagement.Services.Application
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteDepartment(string DepartmentId)
+        public Task<bool> DeleteDepartment(string departmentId)
         {
             throw new NotImplementedException();
         }
@@ -32,7 +32,7 @@ namespace EmployeeManagement.Services.Application
             throw new NotImplementedException();
         }
 
-        public Task<DepartmentResponse> GetDepartmentById(string DepartmentId)
+        public Task<DepartmentResponse> GetDepartmentById(string departmentId)
         {
             throw new NotImplementedException();
         }

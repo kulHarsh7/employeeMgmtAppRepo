@@ -13,12 +13,12 @@ namespace EmployeeManagement.Services.Repository
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public Task<Department> CreateDepartment(Department DepartmentModel)
+        public Task<Department> CreateDepartment(Department departmentModel)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteDepartment(Guid DepartmentId)
+        public Task<bool> DeleteDepartment(Guid departmentId)
         {
             throw new NotImplementedException();
         }
@@ -28,12 +28,12 @@ namespace EmployeeManagement.Services.Repository
             throw new NotImplementedException();
         }
 
-        public Task<Department> GetDepartmentById(Guid DepartmentId)
+        public Task<Department> GetDepartmentById(Guid departmentId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Department> UpdateDepartment(Department DepartmentModel)
+        public Task<Department> UpdateDepartment(Department departmentModel)
         {
             throw new NotImplementedException();
         }
