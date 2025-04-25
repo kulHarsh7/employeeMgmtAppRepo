@@ -1,4 +1,5 @@
 ﻿using EmployeeManagement.Contacts.Repository;
+using EmployeeManagement.Models.Models;
 using EmployeeManagement.Services.DBContext;
 
 namespace EmployeeManagement.Services.Repository
@@ -10,6 +11,31 @@ namespace EmployeeManagement.Services.Repository
         public DepartmentRepository(EmployeeDbContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        }
+
+        public Task<Department> CreateDepartment(Department departmentModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteDepartment(Guid departmentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Department>> GetAllDepartments()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Department> GetDepartmentById(Guid departmentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Department> UpdateDepartment(Department departmentModel)
+        {
+            throw new NotImplementedException();
         }
     }
 }
