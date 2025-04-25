@@ -5,10 +5,7 @@ namespace EmployeeManagement.Services.DBContext
 {
     public class EmployeeDbContext : DbContext
     {
-        public EmployeeDbContext(DbContextOptions options) : base(options)
-        {
-                
-        }
+        public EmployeeDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Employee> Employees { get; set; }
 
@@ -19,7 +16,7 @@ namespace EmployeeManagement.Services.DBContext
             base.OnModelCreating(modelBuilder);
 
             // ✅ Automatically apply all configurations in the assembly
-            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(EmployeeDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(EmployeeDbContext).Assembly);
         }
     }
 }
