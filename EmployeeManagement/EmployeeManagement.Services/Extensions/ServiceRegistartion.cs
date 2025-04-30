@@ -1,6 +1,8 @@
-﻿using EmployeeManagement.Contacts.Application;
+﻿using CEmployeeManagement.Services.Application.Validators.Common;
+using EmployeeManagement.Contacts.Application;
 using EmployeeManagement.Contacts.Repository;
 using EmployeeManagement.Services.Application;
+using EmployeeManagement.Services.Application.Validators.Common;
 using EmployeeManagement.Services.DBContext;
 using EmployeeManagement.Services.Mapster;
 using EmployeeManagement.Services.Repository;
@@ -32,10 +34,12 @@ namespace EmployeeManagement.Services.Extensions
             services.AddValidatorsFromAssemblyContaining(typeof(ServiceRegistartion));
 
             //register services
-            services.AddScoped<IEmployeeService, EmployeeService>();
-            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IValidatorService, ValidatorService>();
+
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
 
          return services;
         }

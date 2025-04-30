@@ -7,8 +7,8 @@
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public decimal Salary { get; set; }
-        public bool IsInactive { get; set; }
-        public int DepartmentId { get; set; }
+        public bool IsInactive { get; set; } = false;
+        public Guid DepartmentId { get; set; }
         public Department Department { get; set; } = null!;
     }
 }

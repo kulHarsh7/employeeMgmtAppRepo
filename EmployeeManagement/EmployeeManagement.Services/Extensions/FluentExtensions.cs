@@ -1,5 +1,6 @@
 ﻿using EmployeeManagement.Models.DTO.Response.Common;
 using FluentValidation.Results;
+using System.Text.RegularExpressions;
 
 namespace EmployeeManagement.Services.Extensions
 {
@@ -13,6 +14,20 @@ namespace EmployeeManagement.Services.Extensions
                 errors.Add(new Error(error.ErrorMessage));
             }
             return errors;
+        }
+
+        public static bool IsValidEmail(string emailId)
+        {
+            if(string.IsNullOrEmpty(emailId)) return false;
+
+            var emailRegex = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+
+            return Regex.IsMatch(emailId, emailRegex, RegexOptions.IgnoreCase);
+        }
+
+        public static bool BeValidGuid(string id)
+        {
+            return Guid.TryParse(id, out _);
         }
     }
 }

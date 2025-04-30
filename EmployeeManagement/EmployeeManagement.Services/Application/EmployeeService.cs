@@ -2,6 +2,7 @@
 using EmployeeManagement.Contacts.Repository;
 using EmployeeManagement.Models.DTO.Request;
 using EmployeeManagement.Models.DTO.Response;
+using EmployeeManagement.Services.Application.Validators.Common;
 using Microsoft.Extensions.Logging;
 
 namespace EmployeeManagement.Services.Application
@@ -10,11 +11,13 @@ namespace EmployeeManagement.Services.Application
     {
         private readonly ILogger<EmployeeService> _logger;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IValidatorService _validatorService;
 
-        public EmployeeService(ILogger<EmployeeService> logger, IEmployeeRepository employeeRepository)
+        public EmployeeService(ILogger<EmployeeService> logger, IEmployeeRepository employeeRepository, IValidatorService validatorService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
+            _validatorService = validatorService ?? throw new ArgumentNullException(nameof(validatorService));
         }
 
         public Task<EmployeeResponse> CreateEmployee(CreateEmployeeRequest createEmployeeRequest)

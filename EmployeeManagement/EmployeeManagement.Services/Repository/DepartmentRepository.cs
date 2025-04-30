@@ -1,6 +1,7 @@
 ﻿using EmployeeManagement.Contacts.Repository;
 using EmployeeManagement.Models.Models;
 using EmployeeManagement.Services.DBContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagement.Services.Repository
 {
@@ -13,29 +14,80 @@ namespace EmployeeManagement.Services.Repository
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public Task<Department> CreateDepartment(Department departmentModel)
+        public async Task<Department> CreateDepartment(Department departmentModel)
         {
-            throw new NotImplementedException();
+            if (departmentModel == null)
+            {
+                throw new ArgumentNullException(nameof(departmentModel));
+            }
+
+            var isAlreadyExist = await _dbContext.Departments.FirstOrDefaultAsync(x => x.Name == departmentModel.Name);
+
+            if (isAlreadyExist != null)
+            {
+                throw new InvalidOperationException("An department with this email already exists.");
+            }
+
+            await _dbContext.Departments.AddAsync(departmentModel);
+            await _dbContext.SaveChangesAsync();
+
+            return departmentModel;
         }
 
-        public Task<bool> DeleteDepartment(Guid departmentId)
+        public async Task<bool> DeleteDepartment(Guid departmentId)
         {
-            throw new NotImplementedException();
+            var department = await _dbContext.Departments.FindAsync(departmentId);
+
+            if (department == null)
+            {
+                return false;
+            }
+
+            if (department.IsInactive)
+            {
+                throw new InvalidOperationException("department is already inactive or deleted in system");
+            }
+
+            department.IsInactive = true;
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
 
-        public Task<List<Department>> GetAllDepartments()
+        public async Task<List<Department>> GetAllDepartments()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Departments.Where(x => x.IsInactive).ToListAsync();
         }
 
-        public Task<Department> GetDepartmentById(Guid departmentId)
+        public async Task<Department> GetDepartmentById(Guid departmentId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Departments.Where(x => x.DepartmentId == departmentId && x.IsInactive).FirstOrDefaultAsync();
         }
 
-        public Task<Department> UpdateDepartment(Department departmentModel)
+        public async Task<Department> UpdateDepartment(Department departmentModel)
         {
-            throw new NotImplementedException();
+            if (departmentModel == null)
+            {
+                throw new ArgumentNullException(nameof(departmentModel));
+            }
+
+            var department = await _dbContext.Departments.FindAsync(departmentModel.DepartmentId);
+
+            if (department == null)
+            {
+                return null;
+            }
+
+            if (department.IsInactive)
+            {
+                throw new InvalidOperationException("department details can not be updated as employee is already inactive or deleted in system");
+            }
+
+            department.Name = departmentModel.Name;
+
+            await _dbContext.SaveChangesAsync();
+
+            return department;
         }
     }
 }
