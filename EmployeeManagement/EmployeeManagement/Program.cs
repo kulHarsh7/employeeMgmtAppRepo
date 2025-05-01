@@ -1,4 +1,5 @@
 using EmployeeManagement.Services.Extensions;
+using EmployeeManagement.Web.Middlware;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -49,6 +50,7 @@ internal class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        app.UseMiddleware<ExceptionHandler>();
 
         app.UseHttpsRedirection();
 

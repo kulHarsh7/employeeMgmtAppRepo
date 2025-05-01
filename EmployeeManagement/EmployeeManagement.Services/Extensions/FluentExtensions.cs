@@ -29,5 +29,9 @@ namespace EmployeeManagement.Services.Extensions
         {
             return Guid.TryParse(id, out _);
         }
+        public static Guid ParseToGuid(string id)
+        {
+            return Guid.TryParse(id, out var guid) ? guid : Guid.Empty;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using EmployeeManagement.Contacts.Repository;
 using EmployeeManagement.Models.Models;
 using EmployeeManagement.Services.DBContext;
+using EmployeeManagement.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagement.Services.Repository
@@ -18,14 +19,14 @@ namespace EmployeeManagement.Services.Repository
         {
             if (departmentModel == null)
             {
-                throw new ArgumentNullException(nameof(departmentModel));
+                throw new InvalidModelException($"{nameof(departmentModel)} is not valid or null");
             }
 
             var isAlreadyExist = await _dbContext.Departments.FirstOrDefaultAsync(x => x.Name == departmentModel.Name);
 
             if (isAlreadyExist != null)
             {
-                throw new InvalidOperationException("An department with this email already exists.");
+                throw new DuplicateRecordException("An department with provided name already exists.");
             }
 
             await _dbContext.Departments.AddAsync(departmentModel);
@@ -36,6 +37,11 @@ namespace EmployeeManagement.Services.Repository
 
         public async Task<bool> DeleteDepartment(Guid departmentId)
         {
+            if(departmentId == Guid.Empty)
+            {
+                throw new InvalidModelException($"{nameof(departmentId)} is not valid, null or empty");
+            }
+
             var department = await _dbContext.Departments.FindAsync(departmentId);
 
             if (department == null)
@@ -45,7 +51,7 @@ namespace EmployeeManagement.Services.Repository
 
             if (department.IsInactive)
             {
-                throw new InvalidOperationException("department is already inactive or deleted in system");
+                throw new RecordIsInactiveException("department is already inactive or deleted in system");
             }
 
             department.IsInactive = true;
@@ -61,6 +67,10 @@ namespace EmployeeManagement.Services.Repository
 
         public async Task<Department> GetDepartmentById(Guid departmentId)
         {
+            if (departmentId == Guid.Empty)
+            {
+                throw new InvalidModelException($"{nameof(departmentId)} is not valid, null or empty");
+            }
             return await _dbContext.Departments.Where(x => x.DepartmentId == departmentId && x.IsInactive).FirstOrDefaultAsync();
         }
 
@@ -68,7 +78,7 @@ namespace EmployeeManagement.Services.Repository
         {
             if (departmentModel == null)
             {
-                throw new ArgumentNullException(nameof(departmentModel));
+                throw new InvalidModelException($"{nameof(departmentModel)} is not valid or null");
             }
 
             var department = await _dbContext.Departments.FindAsync(departmentModel.DepartmentId);
@@ -80,7 +90,7 @@ namespace EmployeeManagement.Services.Repository
 
             if (department.IsInactive)
             {
-                throw new InvalidOperationException("department details can not be updated as employee is already inactive or deleted in system");
+                throw new RecordIsInactiveException("department details can not be updated as employee is already inactive or deleted in system");
             }
 
             department.Name = departmentModel.Name;
