@@ -58,12 +58,11 @@ namespace EmployeeManagement.Services.Application
             try
             {
                 //validate request
-                if (!FluentExtensions.BeValidGuid(employeeId))
+                if (!FluentExtensions.BeValidGuid(employeeId, out var empId))
                 {
                     return ApiResponse<bool>.ValidationFailure(ErrorCategory.Validation.ToString(),
                            [new Error(string.Format(ValidationErrorConstants.ShouldBeAValid, nameof(employeeId)))]);
                 }
-                var empId = FluentExtensions.ParseToGuid(employeeId);
                 var response = await _employeeRepository.DeleteEmployee(empId);
 
                 if (!response)
@@ -107,13 +106,11 @@ namespace EmployeeManagement.Services.Application
             try
             {
                 //validate request
-                if (!FluentExtensions.BeValidGuid(employeeId))
+                if (!FluentExtensions.BeValidGuid(employeeId, out var empId))
                 {
                     return ApiResponse<EmployeeResponse>.ValidationFailure(ErrorCategory.Validation.ToString(),
                            [new Error(string.Format(ValidationErrorConstants.ShouldBeAValid, nameof(employeeId)))]);
                 }
-                var empId = FluentExtensions.ParseToGuid(employeeId);
-
                 var employeeModelResponse = await _employeeRepository.GetEmployeeById(empId);
 
                 if (employeeModelResponse == null)

@@ -57,12 +57,11 @@ namespace EmployeeManagement.Services.Application
             try
             {
                 //validate request
-                if(!FluentExtensions.BeValidGuid(departmentId))
+                if(!FluentExtensions.BeValidGuid(departmentId, out var deptId))
                 {
                     return ApiResponse<bool>.ValidationFailure(ErrorCategory.Validation.ToString(),
                            [new Error(string.Format(ValidationErrorConstants.ShouldBeAValid, nameof(departmentId)))]);
                 }
-                var deptId = FluentExtensions.ParseToGuid(departmentId);
                 var response = await _departmentRepository.DeleteDepartment(deptId);
 
                 if (!response)
@@ -106,12 +105,11 @@ namespace EmployeeManagement.Services.Application
             try
             {
                 //validate request
-                if (!FluentExtensions.BeValidGuid(departmentId))
+                if (!FluentExtensions.BeValidGuid(departmentId, out var deptId))
                 {
                     return ApiResponse<DepartmentResponse>.ValidationFailure(ErrorCategory.Validation.ToString(),
                            [new Error(string.Format(ValidationErrorConstants.ShouldBeAValid, nameof(departmentId)))]);
                 }
-                var deptId = FluentExtensions.ParseToGuid(departmentId);
 
                 var department = await _departmentRepository.GetDepartmentById(deptId);
 
