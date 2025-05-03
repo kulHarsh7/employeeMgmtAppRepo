@@ -4,6 +4,7 @@
     {
         NotFound,
         Validation,
+        Forbidden,
         Api,
         Technical
     }

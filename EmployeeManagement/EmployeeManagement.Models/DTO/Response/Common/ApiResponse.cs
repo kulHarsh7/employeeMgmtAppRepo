@@ -6,7 +6,6 @@ namespace EmployeeManagement.Models.DTO.Response.Common
     {
         public T Data { get; set; }
         public bool IsSuccess { get; set; }
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public string? ErrorCategory { get; set; }
         public List<Error> Errors { get; set; }
 

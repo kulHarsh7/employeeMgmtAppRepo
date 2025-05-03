@@ -14,7 +14,7 @@ namespace EmployeeManagement.Services.Exceptions
 
     public class DuplicateRecordException : ApiHandledException
     {
-        public DuplicateRecordException(string message) : base(ErrorCategory.Api.ToString() ,message) { }
+        public DuplicateRecordException(string message) : base(ErrorCategory.Forbidden.ToString() ,message) { }
     }
 
     public class InvalidModelException : ApiHandledException
@@ -24,6 +24,6 @@ namespace EmployeeManagement.Services.Exceptions
 
     public class RecordIsInactiveException : ApiHandledException
     {
-        public RecordIsInactiveException(string message) : base(ErrorCategory.Api.ToString(), message) { }
+        public RecordIsInactiveException(string message) : base(ErrorCategory.Forbidden.ToString(), message) { }
     }
 }

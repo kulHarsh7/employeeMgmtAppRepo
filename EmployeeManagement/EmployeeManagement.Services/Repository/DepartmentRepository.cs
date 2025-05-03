@@ -62,7 +62,7 @@ namespace EmployeeManagement.Services.Repository
 
         public async Task<List<Department>> GetAllDepartments()
         {
-            return await _dbContext.Departments.Where(x => x.IsInactive).ToListAsync();
+            return await _dbContext.Departments.Where(x => !x.IsInactive).ToListAsync();
         }
 
         public async Task<Department> GetDepartmentById(Guid departmentId)
@@ -71,7 +71,7 @@ namespace EmployeeManagement.Services.Repository
             {
                 throw new InvalidModelException($"{nameof(departmentId)} is not valid, null or empty");
             }
-            return await _dbContext.Departments.Where(x => x.DepartmentId == departmentId && x.IsInactive).FirstOrDefaultAsync();
+            return await _dbContext.Departments.Where(x => x.DepartmentId == departmentId && !x.IsInactive).FirstOrDefaultAsync();
         }
 
         public async Task<Department> UpdateDepartment(Department departmentModel)

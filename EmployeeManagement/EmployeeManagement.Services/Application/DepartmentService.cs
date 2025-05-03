@@ -143,6 +143,13 @@ namespace EmployeeManagement.Services.Application
 
                 var departmentModel = _mapper.Map<Department>(updateDepartmentRequest);
                 var updatedDepartemt = await _departmentRepository.UpdateDepartment(departmentModel);
+
+                if (updatedDepartemt == null)
+                {
+                    return ApiResponse<DepartmentResponse>.NotFoundFailure(ErrorCategory.NotFound.ToString(),
+                        string.Format(ServiceError.NotFoundWithIdError, nameof(Department), updateDepartmentRequest.DepartmentId));
+                }
+
                 var departmentResponse = _mapper.Map<DepartmentResponse>(updatedDepartemt);
 
                 return ApiResponse<DepartmentResponse>.Success(departmentResponse);
