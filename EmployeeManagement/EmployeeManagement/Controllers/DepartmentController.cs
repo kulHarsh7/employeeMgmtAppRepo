@@ -1,12 +1,14 @@
 ﻿using EmployeeManagement.Contacts.Application;
 using EmployeeManagement.Models.DTO.Request;
 using EmployeeManagement.Models.DTO.Response;
+using EmployeeManagement.Models.DTO.Response.Common;
+using EmployeeManagement.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace DepartmentManagement.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("EmployeeMgmtApp/api/[controller]")]
     [ApiController]
     public class DepartmentController : ControllerBase
     {
@@ -20,53 +22,59 @@ namespace DepartmentManagement.Web.Controllers
         }
 
         [HttpGet(Name = "GetAllDepartment")]
-        [ProducesResponseType(typeof(List<DepartmentResponse>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ApiResponse<List<DepartmentResponse>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<List<DepartmentResponse>>> GetAllDepartmentAsync()
         {
             var DepartmentListResponse = await _departmentService.GetAllDepartments();
-            return Ok(new DepartmentResponse { DepartmentName = "John" });
+            return this.HandleResult(DepartmentListResponse);
         }
 
         [HttpGet("{departmentId}", Name = "GetDepartmentById")]
-        [ProducesResponseType(typeof(DepartmentResponse), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ApiResponse<DepartmentResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<DepartmentResponse>> GetDepartmentByIdAsync([FromRoute] string departmentId)
         {
             var departmentResponse = await _departmentService.GetDepartmentById(departmentId);
-            return Ok(new DepartmentResponse { DepartmentName = "John" });
+            return this.HandleResult(departmentResponse);
         }
 
         [HttpPost(Name = "CreateDepartment")]
-        [ProducesResponseType(typeof(DepartmentResponse), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ApiResponse<DepartmentResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<DepartmentResponse>> CreateDepartmentAsync(CreateDepartmentRequest createDepartmentRequest)
         {
             var createdDepartmentResponse = await _departmentService.CreateDepartment(createDepartmentRequest);
-            return Ok(new DepartmentResponse { DepartmentName = "John" });
+            return this.HandleResult(createdDepartmentResponse);
         }
 
         [HttpPut(Name = "UpdateDepartment")]
-        [ProducesResponseType(typeof(DepartmentResponse), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ApiResponse<DepartmentResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<DepartmentResponse>> UpdateDepartmentAsync(UpdateDepartmentRequest updateDepartmentRequest)
         {
             var updatedDepartmentResponse = await _departmentService.UpdateDepartment(updateDepartmentRequest);
-            return Ok(new DepartmentResponse { DepartmentName = "John" });
+            return this.HandleResult(updatedDepartmentResponse);
         }
 
         [HttpDelete("{departmentId}", Name = "DeleteDepartment")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult> DeleteDepartmentAsync([FromRoute] string departmentId)
+        [ProducesResponseType(typeof(ApiResponse<DepartmentResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.InternalServerError)]
+        public async Task<ActionResult<bool>> DeleteDepartmentAsync([FromRoute] string departmentId)
         {
             var deletedDepartmentResponse = await _departmentService.DeleteDepartment(departmentId);
-            return Ok("Deleted successfully");
+            return this.HandleResult(deletedDepartmentResponse);
         }
     }
 }

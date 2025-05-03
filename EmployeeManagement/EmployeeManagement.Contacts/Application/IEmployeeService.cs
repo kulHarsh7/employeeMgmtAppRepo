@@ -1,14 +1,15 @@
 ﻿using EmployeeManagement.Models.DTO.Request;
 using EmployeeManagement.Models.DTO.Response;
+using EmployeeManagement.Models.DTO.Response.Common;
 
 namespace EmployeeManagement.Contacts.Application
 {
     public interface IEmployeeService
     {
-        Task<EmployeeResponse> GetEmployeeById(string employeeId);
-        Task<List<EmployeeResponse>> GetAllEmployees();
-        Task<EmployeeResponse> CreateEmployee(CreateEmployeeRequest createEmployeeRequest);
-        Task<EmployeeResponse> UpdateEmployee(UpdateEmployeeRequest updateEmployeeRequest);
-        Task<bool> DeleteEmployee(string employeeId);
+        Task<ApiResponse<EmployeeResponse>> GetEmployeeById(string employeeId);
+        Task<ApiResponse<List<EmployeeResponse>>> GetAllEmployees();
+        Task<ApiResponse<EmployeeResponse>> CreateEmployee(CreateEmployeeRequest createEmployeeRequest);
+        Task<ApiResponse<EmployeeResponse>> UpdateEmployee(UpdateEmployeeRequest updateEmployeeRequest);
+        Task<ApiResponse<bool>> DeleteEmployee(string employeeId);
     }
 }

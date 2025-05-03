@@ -1,12 +1,14 @@
 ﻿using EmployeeManagement.Contacts.Application;
 using EmployeeManagement.Models.DTO.Request;
 using EmployeeManagement.Models.DTO.Response;
+using EmployeeManagement.Models.DTO.Response.Common;
+using EmployeeManagement.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace EmployeeManagement.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("EmployeeMgmtApp/api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
@@ -20,53 +22,59 @@ namespace EmployeeManagement.Web.Controllers
         }
 
         [HttpGet(Name = "GetAllEmployees")]
-        [ProducesResponseType(typeof(List<EmployeeResponse>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ApiResponse<List<EmployeeResponse>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<List<EmployeeResponse>>> GetAllEmployeesAsync()
         {
             var employeeListResponse = await _employeeService.GetAllEmployees();
-            return Ok(new EmployeeResponse { FirstName = "John" });
+            return this.HandleResult(employeeListResponse);
         }
 
         [HttpGet("{employeeId}", Name = "GetEmployeeById")]
-        [ProducesResponseType(typeof(EmployeeResponse), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ApiResponse<EmployeeResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<EmployeeResponse>> GetEmployeeByIdAsync([FromRoute] string employeeId)
         {
             var employeeResponse = await _employeeService.GetEmployeeById(employeeId);
-            return Ok(new EmployeeResponse { FirstName = "John" });
+            return this.HandleResult(employeeResponse);
         }
 
         [HttpPost(Name = "CreateEmployee")]
-        [ProducesResponseType(typeof(EmployeeResponse), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ApiResponse<EmployeeResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<EmployeeResponse>> CreateEmployeeAsync(CreateEmployeeRequest createEmployeeRequest)
         {
             var createdEmployeeResponse = await _employeeService.CreateEmployee(createEmployeeRequest);
-            return Ok(new EmployeeResponse { FirstName = "John" });
+            return this.HandleResult(createdEmployeeResponse);
         }
 
         [HttpPut(Name = "UpdateEmployee")]
-        [ProducesResponseType(typeof(EmployeeResponse), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ApiResponse<EmployeeResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<EmployeeResponse>> UpdateEmployeeAsync(UpdateEmployeeRequest updateEmployeeRequest)
         {
             var updatedEmployeeResponse = await _employeeService.UpdateEmployee(updateEmployeeRequest);
-            return Ok(new EmployeeResponse { FirstName = "John" });
+            return this.HandleResult(updatedEmployeeResponse);
         }
 
         [HttpDelete("{employeeId}", Name = "DeleteEmployee")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult> DeleteEmployeeAsync([FromRoute] string employeeId)
+        [ProducesResponseType(typeof(ApiResponse<EmployeeResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<>), (int)HttpStatusCode.InternalServerError)]
+        public async Task<ActionResult<bool>> DeleteEmployeeAsync([FromRoute] string employeeId)
         {
             var deletedEmployeeResponse = await _employeeService.DeleteEmployee(employeeId);
-            return Ok("Deleted successfully");
+            return this.HandleResult(deletedEmployeeResponse);
         }
     }
 }

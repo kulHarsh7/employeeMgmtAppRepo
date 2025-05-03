@@ -25,6 +25,10 @@ namespace EmployeeManagement.Services.Extensions
             return Regex.IsMatch(emailId, emailRegex, RegexOptions.IgnoreCase);
         }
 
+        public static bool BeValidGuid(string id, out Guid guidId)
+        {
+            return Guid.TryParse(id, out guidId);
+        }
         public static bool BeValidGuid(string id)
         {
             return Guid.TryParse(id, out _);

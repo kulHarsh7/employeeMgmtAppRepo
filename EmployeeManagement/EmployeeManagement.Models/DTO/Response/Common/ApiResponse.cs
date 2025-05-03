@@ -2,11 +2,10 @@
 
 namespace EmployeeManagement.Models.DTO.Response.Common
 {
-    public class ApiResponse<T> where T : class
+    public class ApiResponse<T>
     {
         public T Data { get; set; }
         public bool IsSuccess { get; set; }
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public string? ErrorCategory { get; set; }
         public List<Error> Errors { get; set; }
 
